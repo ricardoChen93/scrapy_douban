@@ -15,15 +15,15 @@ SPIDER_MODULES = ['scrapy_douban.spiders']
 NEWSPIDER_MODULE = 'scrapy_douban.spiders'
 
 # Ensure all spiders share same duplicates filter through redis.
-#DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
+DUPEFILTER_CLASS = "scrapy_redis.dupefilter.RFPDupeFilter"
 
 # Enables scheduling storing requests queue in redis.
-#SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 
 # Don't cleanup redis queues, allows to pause/resume crawls.
-#SCHEDULER_PERSIST = True
+SCHEDULER_PERSIST = True
 
-#SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderPriorityQueue"
+SCHEDULER_QUEUE_CLASS = "scrapy_redis.queue.SpiderPriorityQueue"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:21.0) Gecko/20130331 Firefox/21.0'
