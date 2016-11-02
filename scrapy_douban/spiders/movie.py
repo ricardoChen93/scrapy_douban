@@ -99,16 +99,14 @@ class MovieSpider(scrapy.Spider):
             return ''.join(con).replace(' ', '')
 
     def get_language(self, response):
-        s = ''.join(response.xpath('//div[@id="info"]').extract())
-        m = self.rules['LANGUAGE_RE'].search(s)
+        m = self.rules['LANGUAGE_RE'].search((response.body).decode('utf8'))
         if not m:
             return
         else:
             return [ lang.strip() for lang in m.group(1).split('/') ]
 
     def get_country(self, response):
-        s = ''.join(response.xpath('//div[@id="info"]').extract())
-        m = self.rules['COUNTRY_RE'].search(s)
+        m = self.rules['COUNTRY_RE'].search((response.body).decode('utf8'))
         if not m:
             return
         else:
