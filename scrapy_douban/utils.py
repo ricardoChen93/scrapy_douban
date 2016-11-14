@@ -1,8 +1,9 @@
-#encoding: utf-8
+# encoding: utf-8
 from random import randint
 
 BID_LEN = 20
 BID_LIST_LEN = 500
+
 
 def gen_bids():
     bids = []

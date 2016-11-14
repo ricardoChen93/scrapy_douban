@@ -103,11 +103,11 @@ class MovieSpider(scrapy.Spider):
         if not m:
             return
         else:
-            return [ lang.strip() for lang in m.group(1).split('/') ]
+            return [lang.strip() for lang in m.group(1).split('/')]
 
     def get_country(self, response):
         m = self.rules['COUNTRY_RE'].search((response.body).decode('utf8'))
         if not m:
             return
         else:
-            return [ country.strip() for country in m.group(1).split('/') ]
+            return [country.strip() for country in m.group(1).split('/')]

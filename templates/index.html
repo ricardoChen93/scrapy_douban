@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>豆瓣电影筛选</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <style type="text/css">
+  input {width: 80px;}
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>豆瓣电影筛选</h1>
+  <div class="row">
+    <ul class="list-group">
+      <form action="/" method="POST">
+        <li class="list-group-item">
+          <div>制片国家:
+            <input name="country"/>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <div>评分>=
+            <input name="rating"/>
+          </div>
+        </li>
+        <li class="list-group-item">
+          <button class="submit" type="submit">筛选</button>
+        </li>
+      </form>
+    </ul>
+  </div>
+  <div class="row">
+    <div class="col-md-4" style="margin-top:30px;">
+      共<span style="color:red;">{{ page.count }}</span>部电影,
+      当前为第<span style="color:red;">{{ page.cpage }}</span>页,
+      共<span style="color:red;">{{ page.max_page }}</span>页
+    </div>
+    <div class="col-md-8">
+      <ul class="pager">
+        {% if page.cpage == 1 %}
+        <li class="previous disabled" style="float:left;">上一页</li>
+        {% else %}
+        <li class="previous"><a href="javascript:;">上一页</a></li>
+        {% endif %}
+        <li>
+        跳转到第 <input name="gotoPage" style="width:40px;"/> 页
+        </li>
+        {% if page.cpage == page.max_page %}
+        <li class="next disabled" style="float:right;">下一页</li>
+        {% else %}
+        <li class="next"><a href="javascript:;">下一页</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>名称</th>
+        <th>国家</th>
+        <th>类型</th>
+        <th>主演</th>
+        <th>评分</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for movie in movies %}
+      <tr>
+        <td>{{ movie["title"] }}</td>
+        <td>{{ "|".join(movie["country"]) }}</td>
+        <td>{{ "|".join(movie["genre"]) }}</td>
+        <td>{{ "|".join(movie["performer"]) }}</td>
+        <td>{{ movie["rating"] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script>
+$(function() {
+  var Form = $("form");
+  var cpage = parseInt({{ page.cpage }});
+
+  $(".previous").click(function() {
+    gotoPage(cpage - 1);
+  });
+  $(".next").click(function() {
+    gotoPage(cpage + 1)
+  });
+  $("input[name='gotoPage']").keypress(function (e) {
+    var key = e.which;
+    if (key == 13) {
+      gotoPage($("input[name='gotoPage']").val())
+    }
+  });
+
+  function gotoPage(page) {
+    Form.append("<input type='hidden' name='cpage' value=" + page + ">");
+    Form.submit();
+  };
+})
+</script>
+</body>
+</html>

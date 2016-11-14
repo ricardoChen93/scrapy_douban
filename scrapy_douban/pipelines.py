@@ -8,6 +8,7 @@
 import pymongo
 from scrapy.exceptions import DropItem
 
+
 class MongoPipeline(object):
 
     collection_name = 'movie'
